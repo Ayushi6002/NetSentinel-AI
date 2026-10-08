@@ -137,6 +137,6 @@ def _autoload_sample_data():
 
 if __name__ == "__main__":
     _autoload_sample_data()
-    port = int(os.getenv("PORT", 5000))
+    port = int(os.getenv("PORT", 5001))
     logger.info("Starting NetSentinel AI on http://127.0.0.1:%d", port)
     app.run(host="127.0.0.1", port=port, debug=True, use_reloader=False)

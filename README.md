@@ -125,10 +125,10 @@ cp .env.example .env
 python backend/app.py
 ```
 
-The server starts at `http://127.0.0.1:5000`.
+The server starts at `http://127.0.0.1:5001`.
 
-- Health Endpoint: `http://127.0.0.1:5000/api/health`
-- Frontend Placeholder: `http://127.0.0.1:5000/`
+- Health Endpoint: `http://127.0.0.1:5001/api/health`
+- Frontend Placeholder: `http://127.0.0.1:5001/`
 
 ### 6. Running Tests
 
