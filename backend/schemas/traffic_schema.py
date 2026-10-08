@@ -54,9 +54,20 @@ REQUIRED_COLUMNS = [
 # Known protocol names (used for normalisation)
 KNOWN_PROTOCOLS = {"TCP", "UDP", "ICMP", "DNS", "HTTP", "HTTPS", "ARP", "OTHER"}
 
+# Protocols that do not use transport-layer (TCP/UDP) ports.
+# For these protocols, source_port and destination_port must be normalized to NULL (None).
+PROTOCOLS_WITHOUT_PORTS = {"ICMP", "ARP"}
+
 # Source type constants
 SOURCE_CSV  = "csv"
 SOURCE_LIVE = "live"
+
+
+def is_port_protocol(protocol: Optional[str]) -> bool:
+    """Return True if protocol uses transport ports (e.g. TCP, UDP)."""
+    if not protocol:
+        return True
+    return protocol.strip().upper() not in PROTOCOLS_WITHOUT_PORTS
 
 
 def make_empty_record() -> dict:

@@ -13,6 +13,7 @@ Design principles:
   - Returns an empty DataFrame (with correct columns) on total failure
 """
 
+import ipaddress
 import logging
 from pathlib import Path
 from typing import Optional
@@ -24,6 +25,7 @@ from backend.schemas.traffic_schema import (
     ALL_COLUMNS,
     REQUIRED_COLUMNS,
     KNOWN_PROTOCOLS,
+    PROTOCOLS_WITHOUT_PORTS,
     SOURCE_CSV,
     COLUMN_TIMESTAMP,
     COLUMN_SOURCE_IP,
@@ -75,12 +77,14 @@ def _normalise_protocol(value) -> str:
     return proto if proto in KNOWN_PROTOCOLS else "OTHER"
 
 
-def _safe_port(value) -> Optional[int]:
+def _safe_port(value, protocol: Optional[str] = None) -> Optional[int]:
     """
     Convert a port value to int in [0, 65535], or None if invalid.
-    Some protocols (ICMP) have no ports — None is a valid state.
+    Protocols without transport ports (especially ICMP, ARP) must always have None.
     """
-    if pd.isna(value):
+    if protocol and str(protocol).strip().upper() in PROTOCOLS_WITHOUT_PORTS:
+        return None
+    if value is None or isinstance(value, bool) or pd.isna(value):
         return None
     try:
         port = int(float(value))
@@ -133,18 +137,20 @@ def _safe_timestamp(value) -> Optional[pd.Timestamp]:
 
 def _safe_ip(value) -> Optional[str]:
     """
-    Validate an IPv4/IPv6 address string (basic format check only).
-    Returns None for obviously invalid values.
+    Validate an IPv4/IPv6 address using Python's standard library ipaddress module.
+    Returns normalized canonical IP string if valid, or None for invalid/malformed.
+    Ensures invalid IP addresses are rejected before reaching storage/database.
     """
-    if pd.isna(value):
+    if value is None or isinstance(value, bool) or pd.isna(value):
         return None
     ip_str = str(value).strip()
     if not ip_str:
         return None
-    # Simple sanity check: at least 7 chars for IPv4, contains a dot or colon
-    if len(ip_str) >= 7 and ("." in ip_str or ":" in ip_str):
-        return ip_str
-    return None
+    try:
+        ip_obj = ipaddress.ip_address(ip_str)
+        return str(ip_obj)
+    except (ValueError, TypeError):
+        return None
 
 
 def _apply_aliases(df: pd.DataFrame) -> pd.DataFrame:
@@ -219,9 +225,26 @@ def normalise_dataframe(df: pd.DataFrame, source_type: str = SOURCE_CSV) -> pd.D
     df[COLUMN_TIMESTAMP] = df[COLUMN_TIMESTAMP].apply(_safe_timestamp)
     df[COLUMN_SOURCE_IP] = df[COLUMN_SOURCE_IP].apply(_safe_ip)
     df[COLUMN_DESTINATION_IP] = df[COLUMN_DESTINATION_IP].apply(_safe_ip)
-    df[COLUMN_SOURCE_PORT] = df[COLUMN_SOURCE_PORT].apply(_safe_port)
-    df[COLUMN_DESTINATION_PORT] = df[COLUMN_DESTINATION_PORT].apply(_safe_port)
     df[COLUMN_PROTOCOL] = df[COLUMN_PROTOCOL].apply(_normalise_protocol)
+
+    # Protocols that do not use transport ports (especially ICMP, ARP) must have NULL (None) ports.
+    # For TCP/UDP, validate ports in [0, 65535].
+    df[COLUMN_SOURCE_PORT] = pd.Series(
+        [
+            None if proto in PROTOCOLS_WITHOUT_PORTS else _safe_port(p)
+            for p, proto in zip(df[COLUMN_SOURCE_PORT], df[COLUMN_PROTOCOL])
+        ],
+        index=df.index,
+        dtype=object,
+    )
+    df[COLUMN_DESTINATION_PORT] = pd.Series(
+        [
+            None if proto in PROTOCOLS_WITHOUT_PORTS else _safe_port(p)
+            for p, proto in zip(df[COLUMN_DESTINATION_PORT], df[COLUMN_PROTOCOL])
+        ],
+        index=df.index,
+        dtype=object,
+    )
 
     df[COLUMN_PACKET_COUNT] = df[COLUMN_PACKET_COUNT].apply(
         lambda v: _safe_positive_int(v, COLUMN_PACKET_COUNT)

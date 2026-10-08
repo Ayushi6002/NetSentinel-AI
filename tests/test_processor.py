@@ -159,6 +159,65 @@ class TestNormaliseDataframe(unittest.TestCase):
         self.assertEqual(len(df), 1)
         self.assertEqual(df.iloc[0][COLUMN_SOURCE_IP], "10.0.0.1")
 
+    def test_icmp_ports_become_none_from_zero(self):
+        """ICMP records with port 0 must have source_port and destination_port normalized to None."""
+        row = _make_valid_row(protocol="ICMP", source_port=0, destination_port=0)
+        df = normalise_dataframe(pd.DataFrame([row]))
+        self.assertEqual(len(df), 1)
+        self.assertIsNone(df.iloc[0][COLUMN_SOURCE_PORT])
+        self.assertIsNone(df.iloc[0][COLUMN_DESTINATION_PORT])
+
+    def test_icmp_ports_become_none_from_integers(self):
+        """ICMP records with any port numbers must have source_port and destination_port normalized to None."""
+        row = _make_valid_row(protocol="ICMP", source_port=1234, destination_port=5678)
+        df = normalise_dataframe(pd.DataFrame([row]))
+        self.assertEqual(len(df), 1)
+        self.assertIsNone(df.iloc[0][COLUMN_SOURCE_PORT])
+        self.assertIsNone(df.iloc[0][COLUMN_DESTINATION_PORT])
+
+    def test_tcp_ports_remain_unchanged(self):
+        """TCP ports must be preserved accurately."""
+        row = _make_valid_row(protocol="TCP", source_port=49200, destination_port=443)
+        df = normalise_dataframe(pd.DataFrame([row]))
+        self.assertEqual(len(df), 1)
+        self.assertEqual(df.iloc[0][COLUMN_SOURCE_PORT], 49200)
+        self.assertEqual(df.iloc[0][COLUMN_DESTINATION_PORT], 443)
+
+    def test_udp_ports_remain_unchanged(self):
+        """UDP ports must be preserved accurately."""
+        row = _make_valid_row(protocol="UDP", source_port=54321, destination_port=53)
+        df = normalise_dataframe(pd.DataFrame([row]))
+        self.assertEqual(len(df), 1)
+        self.assertEqual(df.iloc[0][COLUMN_SOURCE_PORT], 54321)
+        self.assertEqual(df.iloc[0][COLUMN_DESTINATION_PORT], 53)
+
+    def test_valid_ipv4_addresses_accepted(self):
+        """Valid IPv4 addresses must be accepted."""
+        row = _make_valid_row(source_ip="192.168.1.50", destination_ip="10.0.0.1")
+        df = normalise_dataframe(pd.DataFrame([row]))
+        self.assertEqual(len(df), 1)
+        self.assertEqual(df.iloc[0][COLUMN_SOURCE_IP], "192.168.1.50")
+        self.assertEqual(df.iloc[0][COLUMN_DESTINATION_IP], "10.0.0.1")
+
+    def test_valid_ipv6_addresses_accepted(self):
+        """Valid IPv6 addresses must be accepted and normalized."""
+        row = _make_valid_row(source_ip="2001:db8::1", destination_ip="::1")
+        df = normalise_dataframe(pd.DataFrame([row]))
+        self.assertEqual(len(df), 1)
+        self.assertEqual(df.iloc[0][COLUMN_SOURCE_IP], "2001:db8::1")
+        self.assertEqual(df.iloc[0][COLUMN_DESTINATION_IP], "::1")
+
+    def test_invalid_ip_addresses_rejected(self):
+        """Malformed IP addresses must be rejected and row dropped."""
+        rows = [
+            _make_valid_row(source_ip="999.999.999.999"),
+            _make_valid_row(destination_ip="not.an.ip.address"),
+            _make_valid_row(source_ip="192.168.1"),
+            _make_valid_row(destination_ip="256.0.0.1"),
+        ]
+        df = normalise_dataframe(pd.DataFrame(rows))
+        self.assertEqual(len(df), 0)
+
 
 class TestTrafficProcessor(unittest.TestCase):
 
