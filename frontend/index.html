@@ -3,49 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NetSentinel AI</title>
+    <title>NetSentinel AI — Network Traffic Intelligence</title>
+    <meta name="description" content="NetSentinel AI Phase 1 — Real-time network traffic analysis and visualization dashboard.">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="badge">NetSentinel AI</div>
-            <h1>NetSentinel AI</h1>
-            <h3>Network Traffic Intelligence</h3>
-        </header>
 
-        <main>
-            <section class="card">
-                <div class="phase-info">
-                    <span class="label">Current Stage:</span>
-                    <span class="phase-tag">Phase 1</span>
-                </div>
+<!-- ============================================================
+     HEADER / NAV
+     ============================================================ -->
+<header class="header">
+    <div class="header-inner">
+        <div class="brand">
+            <div class="brand-icon">⬡</div>
+            <div class="brand-text">
+                <span class="brand-name">NetSentinel AI</span>
+                <span class="brand-sub">Network Traffic Intelligence</span>
+            </div>
+        </div>
 
-                <div class="status-box">
-                    <div class="status-indicator" id="statusDot"></div>
-                    <div class="status-text" id="backendStatus">
-                        Backend Status: <span class="checking">Checking...</span>
-                    </div>
-                </div>
+        <div class="header-controls">
+            <div class="backend-status" id="backendStatusBadge">
+                <span class="status-dot" id="statusDot"></span>
+                <span id="statusLabel">Connecting...</span>
+            </div>
+            <button class="btn btn-primary" id="loadDataBtn">
+                ⟳ Load Sample Data
+            </button>
+        </div>
+    </div>
+</header>
 
-                <div class="details-box" id="detailsBox">
-                    <div class="detail-row">
-                        <span class="detail-key">Endpoint:</span>
-                        <code id="endpointUrl">/api/health</code>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-key">Phase Detail:</span>
-                        <span id="phaseDetail">Waiting for response...</span>
-                    </div>
-                </div>
-            </section>
-        </main>
+<!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+<main class="main">
 
-        <footer>
-            <p>Computer Networks Project &bull; Initial Scaffolding</p>
-        </footer>
+    <!-- Phase banner -->
+    <div class="phase-banner">
+        <span class="phase-tag">Phase 1</span>
+        <span class="phase-label">Network Traffic Intelligence — Sample/Simulated Data</span>
+        <span class="data-count" id="dataCountBadge">No data loaded</span>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Alert area for errors -->
+    <div class="alert-box hidden" id="alertBox">
+        <span id="alertText"></span>
+        <button class="alert-close" id="alertClose">✕</button>
+    </div>
+
+    <!-- --------------------------------------------------------
+         SECTION 1: OVERVIEW CARDS
+         -------------------------------------------------------- -->
+    <section class="section">
+        <h2 class="section-title">Network Overview</h2>
+        <div class="cards-grid" id="overviewCards">
+            <div class="card stat-card" id="card-records">
+                <div class="card-icon">📋</div>
+                <div class="card-value" id="stat-records">—</div>
+                <div class="card-label">Total Records</div>
+            </div>
+            <div class="card stat-card" id="card-packets">
+                <div class="card-icon">📦</div>
+                <div class="card-value" id="stat-packets">—</div>
+                <div class="card-label">Total Packets</div>
+            </div>
+            <div class="card stat-card" id="card-bytes">
+                <div class="card-icon">💾</div>
+                <div class="card-value" id="stat-bytes">—</div>
+                <div class="card-label">Total Data</div>
+            </div>
+            <div class="card stat-card" id="card-connections">
+                <div class="card-icon">🔗</div>
+                <div class="card-value" id="stat-connections">—</div>
+                <div class="card-label">Unique Flows</div>
+            </div>
+            <div class="card stat-card" id="card-src-ips">
+                <div class="card-icon">📤</div>
+                <div class="card-value" id="stat-src-ips">—</div>
+                <div class="card-label">Source IPs</div>
+            </div>
+            <div class="card stat-card" id="card-dst-ips">
+                <div class="card-icon">📥</div>
+                <div class="card-value" id="stat-dst-ips">—</div>
+                <div class="card-label">Destination IPs</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --------------------------------------------------------
+         SECTION 2: PROTOCOL ANALYSIS + CONNECTION STATS
+         -------------------------------------------------------- -->
+    <div class="two-col-grid">
+
+        <!-- Protocol Analysis -->
+        <section class="section card">
+            <h2 class="section-title">Protocol Distribution</h2>
+            <div id="protocolChart" class="protocol-chart-container">
+                <p class="empty-state">Load data to see protocol breakdown</p>
+            </div>
+        </section>
+
+        <!-- Connection Statistics -->
+        <section class="section card">
+            <h2 class="section-title">Connection Statistics</h2>
+            <div id="connStats" class="conn-stats-list">
+                <p class="empty-state">Load data to see connection stats</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- --------------------------------------------------------
+         SECTION 3: TRAFFIC TIMELINE
+         -------------------------------------------------------- -->
+    <section class="section card">
+        <div class="section-header-row">
+            <h2 class="section-title">Traffic Timeline</h2>
+            <div class="freq-controls">
+                <button class="freq-btn active" data-freq="1min">1 min</button>
+                <button class="freq-btn" data-freq="5min">5 min</button>
+            </div>
+        </div>
+        <div id="timelineChart" class="timeline-container">
+            <p class="empty-state">Load data to see timeline</p>
+        </div>
+    </section>
+
+    <!-- --------------------------------------------------------
+         SECTION 4: TOP SOURCES + TOP DESTINATIONS
+         -------------------------------------------------------- -->
+    <div class="two-col-grid">
+
+        <!-- Top Sources -->
+        <section class="section card">
+            <h2 class="section-title">Top Source IPs</h2>
+            <div id="topSourcesList" class="ip-table-container">
+                <p class="empty-state">Load data to see top sources</p>
+            </div>
+        </section>
+
+        <!-- Top Destinations -->
+        <section class="section card">
+            <h2 class="section-title">Top Destination IPs</h2>
+            <div id="topDestsList" class="ip-table-container">
+                <p class="empty-state">Load data to see top destinations</p>
+            </div>
+        </section>
+
+    </div>
+
+</main>
+
+<footer class="footer">
+    <p>NetSentinel AI &bull; Phase 1 &bull; Computer Networks Project &bull;
+       <span id="footerDataNote">Sample/Simulated Data Only</span></p>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
