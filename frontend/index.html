@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetSentinel AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="badge">NetSentinel AI</div>
+            <h1>NetSentinel AI</h1>
+            <h3>Network Traffic Intelligence</h3>
+        </header>
+
+        <main>
+            <section class="card">
+                <div class="phase-info">
+                    <span class="label">Current Stage:</span>
+                    <span class="phase-tag">Phase 1</span>
+                </div>
+
+                <div class="status-box">
+                    <div class="status-indicator" id="statusDot"></div>
+                    <div class="status-text" id="backendStatus">
+                        Backend Status: <span class="checking">Checking...</span>
+                    </div>
+                </div>
+
+                <div class="details-box" id="detailsBox">
+                    <div class="detail-row">
+                        <span class="detail-key">Endpoint:</span>
+                        <code id="endpointUrl">/api/health</code>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-key">Phase Detail:</span>
+                        <span id="phaseDetail">Waiting for response...</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Computer Networks Project &bull; Initial Scaffolding</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
