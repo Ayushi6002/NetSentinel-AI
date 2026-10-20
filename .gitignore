@@ -47,3 +47,6 @@ htmlcov/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Large raw datasets (do not commit)
+data/raw/
