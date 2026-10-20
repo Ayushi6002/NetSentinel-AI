@@ -1,0 +1,569 @@
+{
+  "metadata": {
+    "experiment": "STAGE_1B_MULTI_HORIZON_EVALUATION",
+    "dataset_origin": "SIMULATED",
+    "link_capacity_mbps": 100.0,
+    "evaluated_horizons_minutes": [
+      1,
+      5,
+      10
+    ],
+    "total_aligned_samples": 10056,
+    "partition_sizes": {
+      "train": 7039,
+      "validation": 1508,
+      "test": 1509
+    },
+    "seed": 42,
+    "features": [
+      "utilization_current",
+      "utilization_lag_1",
+      "utilization_lag_2",
+      "utilization_lag_3",
+      "utilization_roll_mean_5",
+      "utilization_roll_std_5",
+      "utilization_roll_mean_15",
+      "utilization_roll_std_15",
+      "utilization_velocity",
+      "utilization_acceleration",
+      "flow_count",
+      "udp_share"
+    ],
+    "congestion_threshold": 0.8
+  },
+  "partition_congestion_counts": {
+    "h1": {
+      "train": {
+        "total": 7039,
+        "congested": 191,
+        "congested_pct": 2.71
+      },
+      "validation": {
+        "total": 1508,
+        "congested": 16,
+        "congested_pct": 1.06
+      },
+      "test": {
+        "total": 1509,
+        "congested": 135,
+        "congested_pct": 8.95
+      }
+    },
+    "h5": {
+      "train": {
+        "total": 7039,
+        "congested": 191,
+        "congested_pct": 2.71
+      },
+      "validation": {
+        "total": 1508,
+        "congested": 16,
+        "congested_pct": 1.06
+      },
+      "test": {
+        "total": 1509,
+        "congested": 135,
+        "congested_pct": 8.95
+      }
+    },
+    "h10": {
+      "train": {
+        "total": 7039,
+        "congested": 191,
+        "congested_pct": 2.71
+      },
+      "validation": {
+        "total": 1508,
+        "congested": 16,
+        "congested_pct": 1.06
+      },
+      "test": {
+        "total": 1509,
+        "congested": 135,
+        "congested_pct": 8.95
+      }
+    }
+  },
+  "results_by_horizon": {
+    "h1": {
+      "horizon_minutes": 1,
+      "regression": {
+        "persistence": {
+          "train": {
+            "mae": 0.0305,
+            "rmse": 0.03904
+          },
+          "validation": {
+            "mae": 0.03061,
+            "rmse": 0.04094
+          },
+          "test": {
+            "mae": 0.03179,
+            "rmse": 0.04136
+          }
+        },
+        "moving_average_5min": {
+          "train": {
+            "mae": 0.04436,
+            "rmse": 0.05738
+          },
+          "validation": {
+            "mae": 0.04505,
+            "rmse": 0.06126
+          },
+          "test": {
+            "mae": 0.04486,
+            "rmse": 0.05855
+          }
+        },
+        "ridge": {
+          "best_alpha": 1.0,
+          "train": {
+            "mae": 0.03005,
+            "rmse": 0.03841
+          },
+          "validation": {
+            "mae": 0.0302,
+            "rmse": 0.04026
+          },
+          "test": {
+            "mae": 0.03144,
+            "rmse": 0.04064
+          }
+        },
+        "random_forest": {
+          "best_max_depth": 6,
+          "train": {
+            "mae": 0.02871,
+            "rmse": 0.03655
+          },
+          "validation": {
+            "mae": 0.03033,
+            "rmse": 0.0405
+          },
+          "test": {
+            "mae": 0.03198,
+            "rmse": 0.04135
+          }
+        }
+      },
+      "alert_classification_test": {
+        "persistence": {
+          "threshold": 0.8,
+          "class_counts": {
+            "total": 1509,
+            "non_congested": 1374,
+            "congested": 135,
+            "congested_pct": 8.95
+          },
+          "confusion_matrix": {
+            "tn": 1364,
+            "fp": 10,
+            "fn": 10,
+            "tp": 125
+          },
+          "precision": 0.9259,
+          "recall": 0.9259,
+          "f1": 0.9259
+        },
+        "moving_average_5min": {
+          "threshold": 0.8,
+          "class_counts": {
+            "total": 1509,
+            "non_congested": 1374,
+            "congested": 135,
+            "congested_pct": 8.95
+          },
+          "confusion_matrix": {
+            "tn": 1355,
+            "fp": 19,
+            "fn": 18,
+            "tp": 117
+          },
+          "precision": 0.8603,
+          "recall": 0.8667,
+          "f1": 0.8635
+        },
+        "ridge": {
+          "threshold": 0.8,
+          "class_counts": {
+            "total": 1509,
+            "non_congested": 1374,
+            "congested": 135,
+            "congested_pct": 8.95
+          },
+          "confusion_matrix": {
+            "tn": 1364,
+            "fp": 10,
+            "fn": 12,
+            "tp": 123
+          },
+          "precision": 0.9248,
+          "recall": 0.9111,
+          "f1": 0.9179
+        },
+        "random_forest": {
+          "threshold": 0.8,
+          "class_counts": {
+            "total": 1509,
+            "non_congested": 1374,
+            "congested": 135,
+            "congested_pct": 8.95
+          },
+          "confusion_matrix": {
+            "tn": 1365,
+            "fp": 9,
+            "fn": 15,
+            "tp": 120
+          },
+          "precision": 0.9302,
+          "recall": 0.8889,
+          "f1": 0.9091
+        }
+      },
+      "champion_model": {
+        "name": "Ridge",
+        "test_mae": 0.03144,
+        "test_rmse": 0.04064,
+        "test_alert": {
+          "threshold": 0.8,
+          "class_counts": {
+            "total": 1509,
+            "non_congested": 1374,
+            "congested": 135,
+            "congested_pct": 8.95
+          },
+          "confusion_matrix": {
+            "tn": 1364,
+            "fp": 10,
+            "fn": 12,
+            "tp": 123
+          },
+          "precision": 0.9248,
+          "recall": 0.9111,
+          "f1": 0.9179
+        }
+      }
+    },
+    "h5": {
+      "horizon_minutes": 5,
+      "regression": {
+        "persistence": {
+          "train": {
+            "mae": 0.06567,
+            "rmse": 0.0854
+          },
+          "validation": {
+            "mae": 0.06713,
+            "rmse": 0.09173
+          },
+          "test": {
+            "mae": 0.06546,
+            "rmse": 0.08572
+          }
+        },
+        "moving_average_5min": {
+          "train": {
+            "mae": 0.06784,
+            "rmse": 0.08958
+          },
+          "validation": {
+            "mae": 0.07133,
+            "rmse": 0.098
+          },
+          "test": {
+            "mae": 0.06675,
+            "rmse": 0.08601
+          }
+        },
+        "ridge": {
+          "best_alpha": 0.01,
+          "train": {
+            "mae": 0.06066,
+            "rmse": 0.07896
+          },
+          "validation": {
+            "mae": 0.06131,
+            "rmse": 0.08285
+          },
+          "test": {
+            "mae": 0.06153,
+            "rmse": 0.0801
+          }
+        },
+        "random_forest": {
+          "best_max_depth": 6,
+          "train": {
+            "mae": 0.05605,
+            "rmse": 0.07271
+          },
+          "validation": {
+            "mae": 0.06155,
+            "rmse": 0.08318
+          },
+          "test": {
+            "mae": 0.06188,
+            "rmse": 0.07978
+          }
+        }
+      },
+      "alert_classification_test": {
+        "persistence": {
+          "threshold": 0.8,
+          "class_counts": {
+            "total": 1509,
+            "non_congested": 1374,
+            "congested": 135,
+            "congested_pct": 8.95
+          },
+          "confusion_matrix": {
+            "tn": 1350,
+            "fp": 24,
+            "fn": 24,
+            "tp": 111
+          },
+          "precision": 0.8222,
+          "recall": 0.8222,
+          "f1": 0.8222
+        },
+        "moving_average_5min": {
+          "threshold": 0.8,
+          "class_counts": {
+            "total": 1509,
+            "non_congested": 1374,
+            "congested": 135,
+            "congested_pct": 8.95
+          },
+          "confusion_matrix": {
+            "tn": 1350,
+            "fp": 24,
+            "fn": 23,
+            "tp": 112
+          },
+          "precision": 0.8235,
+          "recall": 0.8296,
+          "f1": 0.8266
+        },
+        "ridge": {
+          "threshold": 0.8,
+          "class_counts": {
+            "total": 1509,
+            "non_congested": 1374,
+            "congested": 135,
+            "congested_pct": 8.95
+          },
+          "confusion_matrix": {
+            "tn": 1359,
+            "fp": 15,
+            "fn": 32,
+            "tp": 103
+          },
+          "precision": 0.8729,
+          "recall": 0.763,
+          "f1": 0.8142
+        },
+        "random_forest": {
+          "threshold": 0.8,
+          "class_counts": {
+            "total": 1509,
+            "non_congested": 1374,
+            "congested": 135,
+            "congested_pct": 8.95
+          },
+          "confusion_matrix": {
+            "tn": 1358,
+            "fp": 16,
+            "fn": 31,
+            "tp": 104
+          },
+          "precision": 0.8667,
+          "recall": 0.7704,
+          "f1": 0.8157
+        }
+      },
+      "champion_model": {
+        "name": "Ridge",
+        "test_mae": 0.06153,
+        "test_rmse": 0.0801,
+        "test_alert": {
+          "threshold": 0.8,
+          "class_counts": {
+            "total": 1509,
+            "non_congested": 1374,
+            "congested": 135,
+            "congested_pct": 8.95
+          },
+          "confusion_matrix": {
+            "tn": 1359,
+            "fp": 15,
+            "fn": 32,
+            "tp": 103
+          },
+          "precision": 0.8729,
+          "recall": 0.763,
+          "f1": 0.8142
+        }
+      }
+    },
+    "h10": {
+      "horizon_minutes": 10,
+      "regression": {
+        "persistence": {
+          "train": {
+            "mae": 0.08087,
+            "rmse": 0.10741
+          },
+          "validation": {
+            "mae": 0.087,
+            "rmse": 0.11893
+          },
+          "test": {
+            "mae": 0.07884,
+            "rmse": 0.10144
+          }
+        },
+        "moving_average_5min": {
+          "train": {
+            "mae": 0.07843,
+            "rmse": 0.10523
+          },
+          "validation": {
+            "mae": 0.0853,
+            "rmse": 0.11712
+          },
+          "test": {
+            "mae": 0.07642,
+            "rmse": 0.09929
+          }
+        },
+        "ridge": {
+          "best_alpha": 0.01,
+          "train": {
+            "mae": 0.06994,
+            "rmse": 0.09333
+          },
+          "validation": {
+            "mae": 0.07279,
+            "rmse": 0.09829
+          },
+          "test": {
+            "mae": 0.072,
+            "rmse": 0.09333
+          }
+        },
+        "random_forest": {
+          "best_max_depth": 6,
+          "train": {
+            "mae": 0.06402,
+            "rmse": 0.08545
+          },
+          "validation": {
+            "mae": 0.07401,
+            "rmse": 0.1006
+          },
+          "test": {
+            "mae": 0.06923,
+            "rmse": 0.0884
+          }
+        }
+      },
+      "alert_classification_test": {
+        "persistence": {
+          "threshold": 0.8,
+          "class_counts": {
+            "total": 1509,
+            "non_congested": 1374,
+            "congested": 135,
+            "congested_pct": 8.95
+          },
+          "confusion_matrix": {
+            "tn": 1345,
+            "fp": 29,
+            "fn": 29,
+            "tp": 106
+          },
+          "precision": 0.7852,
+          "recall": 0.7852,
+          "f1": 0.7852
+        },
+        "moving_average_5min": {
+          "threshold": 0.8,
+          "class_counts": {
+            "total": 1509,
+            "non_congested": 1374,
+            "congested": 135,
+            "congested_pct": 8.95
+          },
+          "confusion_matrix": {
+            "tn": 1344,
+            "fp": 30,
+            "fn": 29,
+            "tp": 106
+          },
+          "precision": 0.7794,
+          "recall": 0.7852,
+          "f1": 0.7823
+        },
+        "ridge": {
+          "threshold": 0.8,
+          "class_counts": {
+            "total": 1509,
+            "non_congested": 1374,
+            "congested": 135,
+            "congested_pct": 8.95
+          },
+          "confusion_matrix": {
+            "tn": 1357,
+            "fp": 17,
+            "fn": 47,
+            "tp": 88
+          },
+          "precision": 0.8381,
+          "recall": 0.6519,
+          "f1": 0.7333
+        },
+        "random_forest": {
+          "threshold": 0.8,
+          "class_counts": {
+            "total": 1509,
+            "non_congested": 1374,
+            "congested": 135,
+            "congested_pct": 8.95
+          },
+          "confusion_matrix": {
+            "tn": 1361,
+            "fp": 13,
+            "fn": 43,
+            "tp": 92
+          },
+          "precision": 0.8762,
+          "recall": 0.6815,
+          "f1": 0.7667
+        }
+      },
+      "champion_model": {
+        "name": "Ridge",
+        "test_mae": 0.072,
+        "test_rmse": 0.09333,
+        "test_alert": {
+          "threshold": 0.8,
+          "class_counts": {
+            "total": 1509,
+            "non_congested": 1374,
+            "congested": 135,
+            "congested_pct": 8.95
+          },
+          "confusion_matrix": {
+            "tn": 1357,
+            "fp": 17,
+            "fn": 47,
+            "tp": 88
+          },
+          "precision": 0.8381,
+          "recall": 0.6519,
+          "f1": 0.7333
+        }
+      }
+    }
+  }
+}
