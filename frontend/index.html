@@ -92,6 +92,91 @@
     </section>
 
     <!-- --------------------------------------------------------
+         PHASE 2: CONGESTION FORECAST (SIMULATED DATA)
+         -------------------------------------------------------- -->
+    <section class="section card congestion-card" id="congestionSection">
+        <div class="congestion-header-row">
+            <div>
+                <h2 class="section-title">Congestion Forecast <span class="badge-simulated">SIMULATED DATA</span></h2>
+                <p class="congestion-subtitle">Bottleneck Link (100 Mbps) &bull; 5-Min Forward Horizon (h=5) &bull; Replay Stream</p>
+            </div>
+            <div class="congestion-actions">
+                <span class="alert-status-badge" id="congAlertBadge">Initializing...</span>
+                <button class="btn btn-sm" id="congRefreshBtn">⟳ Refresh Forecast</button>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="congLoading" class="congestion-state">
+            <p class="empty-state">Loading simulated congestion forecast...</p>
+        </div>
+
+        <!-- Model Unavailable State -->
+        <div id="congUnavailable" class="congestion-state hidden">
+            <div class="unavailable-banner">
+                <span class="unavailable-icon">⚠️</span>
+                <div>
+                    <strong>Congestion Model Unavailable</strong>
+                    <p id="congUnavailableText">Model artifacts not found or service returned model_unavailable.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error State -->
+        <div id="congError" class="congestion-state hidden">
+            <p class="empty-state text-error" id="congErrorText">Unable to fetch congestion forecast.</p>
+        </div>
+
+        <!-- Main Forecast Content -->
+        <div id="congContent" class="congestion-body hidden">
+            <div class="cong-metrics-grid">
+                <div class="cong-metric-box">
+                    <span class="cong-metric-label">Observed Now (t)</span>
+                    <span class="cong-metric-value" id="congCurrentVal">—</span>
+                    <span class="cong-metric-sub" id="congAsOfTime">—</span>
+                </div>
+                <div class="cong-metric-box highlight-forecast">
+                    <span class="cong-metric-label">Forecast (t+5m)</span>
+                    <span class="cong-metric-value" id="congForecastVal">—</span>
+                    <span class="cong-metric-sub" id="congForecastSub">5-min forward</span>
+                </div>
+                <div class="cong-metric-box">
+                    <span class="cong-metric-label">Persistence Baseline</span>
+                    <span class="cong-metric-value" id="congBaselineVal">—</span>
+                    <span class="cong-metric-sub">Value at t</span>
+                </div>
+                <div class="cong-metric-box">
+                    <span class="cong-metric-label">Moving Avg (5m)</span>
+                    <span class="cong-metric-value" id="congMovingAvgVal">—</span>
+                    <span class="cong-metric-sub">Rolling mean</span>
+                </div>
+                <div class="cong-metric-box">
+                    <span class="cong-metric-label">Alert Threshold</span>
+                    <span class="cong-metric-value threshold-color">80.0%</span>
+                    <span class="cong-metric-sub">Utilization limit</span>
+                </div>
+            </div>
+
+            <!-- Small SVG Chart -->
+            <div class="cong-chart-box">
+                <div class="cong-chart-legend">
+                    <span class="legend-item"><span class="legend-dot observed-dot"></span> Recent Observed (Last 30 Min)</span>
+                    <span class="legend-item"><span class="legend-dot forecast-dot"></span> 5-Min Forecast Point</span>
+                    <span class="legend-item"><span class="legend-dash threshold-dash"></span> 80% Congestion Threshold</span>
+                </div>
+                <div class="cong-svg-wrapper" id="congSvgWrapper">
+                    <svg id="congSvg" class="cong-svg" viewBox="0 0 760 180" preserveAspectRatio="none"></svg>
+                </div>
+                <div class="cong-meta-bar">
+                    <span id="congMetaModel">Model: —</span>
+                    <span id="congMetaDataSource">Source: SIMULATED_BOTTLENECK_LINK</span>
+                    <span id="congMetaCapacity">Capacity: 100 Mbps</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --------------------------------------------------------
          SECTION 2: PROTOCOL ANALYSIS + CONNECTION STATS
          -------------------------------------------------------- -->
     <div class="two-col-grid">

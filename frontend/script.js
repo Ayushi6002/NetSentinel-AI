@@ -28,6 +28,8 @@ const API = {
     dests:    `${BASE_URL}/api/traffic/top-destinations`,
     timeline: (freq) => `${BASE_URL}/api/traffic/timeline?freq=${freq}`,
     connections: `${BASE_URL}/api/traffic/connections`,
+    congestionStatus: `${BASE_URL}/api/congestion/status`,
+    congestionForecast: (asOf) => asOf ? `${BASE_URL}/api/congestion/forecast?as_of=${encodeURIComponent(asOf)}` : `${BASE_URL}/api/congestion/forecast`,
 };
 
 // Current timeline frequency
@@ -405,6 +407,173 @@ async function refreshTimeline() {
 }
 
 // ================================================================
+// PHASE 2: CONGESTION FORECAST (SIMULATED DATA)
+// ================================================================
+
+async function fetchCongestionForecast(asOf = null) {
+    const loadingEl = el("congLoading");
+    const unavailEl = el("congUnavailable");
+    const errorEl = el("congError");
+    const contentEl = el("congContent");
+    const badgeEl = el("congAlertBadge");
+
+    if (loadingEl) loadingEl.classList.remove("hidden");
+    if (unavailEl) unavailEl.classList.add("hidden");
+    if (errorEl) errorEl.classList.add("hidden");
+    if (contentEl) contentEl.classList.add("hidden");
+    if (badgeEl) {
+        badgeEl.textContent = "Loading...";
+        badgeEl.className = "alert-status-badge";
+    }
+
+    try {
+        const url = API.congestionForecast(asOf);
+        const resp = await fetch(url, {
+            headers: { "Accept": "application/json" },
+            cache: "no-cache",
+        });
+
+        if (resp.status === 503) {
+            const errData = await resp.json().catch(() => ({}));
+            if (loadingEl) loadingEl.classList.add("hidden");
+            if (unavailEl) unavailEl.classList.remove("hidden");
+            setText("congUnavailableText", errData.error || "Congestion model artifact is currently unavailable.");
+            if (badgeEl) {
+                badgeEl.textContent = "MODEL UNAVAILABLE";
+                badgeEl.className = "alert-status-badge unavailable";
+            }
+            return;
+        }
+
+        if (!resp.ok) {
+            const errData = await resp.json().catch(() => ({}));
+            throw new Error(errData.error || `HTTP ${resp.status}`);
+        }
+
+        const data = await resp.json();
+        if (loadingEl) loadingEl.classList.add("hidden");
+        if (contentEl) contentEl.classList.remove("hidden");
+        renderCongestionData(data);
+    } catch (err) {
+        if (loadingEl) loadingEl.classList.add("hidden");
+        if (errorEl) errorEl.classList.remove("hidden");
+        setText("congErrorText", `Forecast fetch failed: ${err.message}`);
+        if (badgeEl) {
+            badgeEl.textContent = "ERROR";
+            badgeEl.className = "alert-status-badge text-error";
+        }
+    }
+}
+
+function renderCongestionData(data) {
+    if (!data || !data.forecast) return;
+
+    const f = data.forecast;
+    const badgeEl = el("congAlertBadge");
+
+    if (badgeEl) {
+        if (f.alert) {
+            badgeEl.textContent = "⚠️ CONGESTION ALERT (≥80%)";
+            badgeEl.className = "alert-status-badge alert";
+        } else {
+            badgeEl.textContent = "✓ NORMAL (<80%)";
+            badgeEl.className = "alert-status-badge normal";
+        }
+    }
+
+    setText("congCurrentVal", (f.persistence_baseline_pct !== undefined ? f.persistence_baseline_pct.toFixed(1) : (f.persistence_baseline * 100).toFixed(1)) + "%");
+    setText("congAsOfTime", `As of: ${data.as_of}`);
+    setText("congForecastVal", (f.predicted_utilization_pct !== undefined ? f.predicted_utilization_pct.toFixed(1) : (f.predicted_utilization * 100).toFixed(1)) + "%");
+    setText("congForecastSub", `${data.horizon_minutes || 5}-min forward (t+5)`);
+    setText("congBaselineVal", (f.persistence_baseline_pct !== undefined ? f.persistence_baseline_pct.toFixed(1) : (f.persistence_baseline * 100).toFixed(1)) + "%");
+    setText("congMovingAvgVal", (f.moving_average_5m_pct !== undefined ? f.moving_average_5m_pct.toFixed(1) : "—") + "%");
+
+    setText("congMetaModel", `Model: ${data.model_name || "Ridge"}`);
+    setText("congMetaDataSource", `Source: ${data.data_source} (SIMULATED)`);
+    setText("congMetaCapacity", `Capacity: ${data.capacity_mbps || 100} Mbps`);
+
+    renderCongestionChart(data.recent_observed || [], f.predicted_utilization, data.threshold || 0.80);
+}
+
+function renderCongestionChart(observedSeries, forecastVal, threshold) {
+    const svg = el("congSvg");
+    if (!svg) return;
+
+    const W = 760;
+    const H = 180;
+    const padL = 45;
+    const padR = 65;
+    const padT = 20;
+    const padB = 30;
+    const plotW = W - padL - padR;
+    const plotH = H - padT - padB;
+
+    const yMax = 1.05;
+    const getY = (val) => padT + (1.0 - (val / yMax)) * plotH;
+
+    const totalSteps = 34; // 0 to 29 observed (30 points), plus 5 steps ahead to 34
+    const getX = (stepIdx) => padL + (stepIdx / totalSteps) * plotW;
+
+    let elements = [];
+
+    // Horizontal grid lines and labels
+    const gridLevels = [0.2, 0.4, 0.6, 0.8, 1.0];
+    gridLevels.forEach(lvl => {
+        const y = getY(lvl);
+        elements.push(`<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="var(--border-light)" stroke-width="1" />`);
+        elements.push(`<text x="${padL - 8}" y="${y + 4}" fill="var(--text-muted)" font-size="10" text-anchor="end">${(lvl * 100).toFixed(0)}%</text>`);
+    });
+
+    // Baseline 0 line
+    const y0 = getY(0);
+    elements.push(`<line x1="${padL}" y1="${y0}" x2="${W - padR}" y2="${y0}" stroke="var(--border)" stroke-width="1" />`);
+    elements.push(`<text x="${padL - 8}" y="${y0 + 4}" fill="var(--text-muted)" font-size="10" text-anchor="end">0%</text>`);
+
+    // 80% Threshold line
+    const yThresh = getY(threshold);
+    elements.push(`<line x1="${padL}" y1="${yThresh}" x2="${W - padR + 5}" y2="${yThresh}" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="4,4" />`);
+    elements.push(`<text x="${W - padR + 10}" y="${yThresh + 3}" fill="var(--red)" font-size="10" font-weight="bold">80% Limit</text>`);
+
+    // Observed points and polyline
+    const obsPoints = [];
+    observedSeries.forEach((item, idx) => {
+        const x = getX(idx);
+        const y = getY(item.utilization);
+        obsPoints.push({ x, y, val: item.utilization, time: item.timestamp });
+    });
+
+    if (obsPoints.length > 0) {
+        const polyPoints = obsPoints.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ");
+        elements.push(`<polyline fill="none" stroke="var(--accent)" stroke-width="2" points="${polyPoints}" />`);
+
+        // Draw small dots for observed points
+        obsPoints.forEach((p, idx) => {
+            elements.push(`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="2.5" fill="var(--accent)" />`);
+        });
+
+        // Forecast connecting dashed line from last observed point (step 29) to forecast (step 34)
+        const lastP = obsPoints[obsPoints.length - 1];
+        const forecastX = getX(34);
+        const forecastY = getY(forecastVal);
+
+        elements.push(`<line x1="${lastP.x.toFixed(1)}" y1="${lastP.y.toFixed(1)}" x2="${forecastX.toFixed(1)}" y2="${forecastY.toFixed(1)}" stroke="var(--orange)" stroke-width="1.5" stroke-dasharray="3,3" />`);
+
+        // Forecast point circle
+        const forecastColor = forecastVal >= threshold ? "var(--red)" : "var(--orange)";
+        elements.push(`<circle cx="${forecastX.toFixed(1)}" cy="${forecastY.toFixed(1)}" r="5.5" fill="${forecastColor}" stroke="var(--bg-card)" stroke-width="2" />`);
+        elements.push(`<text x="${forecastX.toFixed(1)}" y="${forecastY - 8}" fill="${forecastColor}" font-size="11" font-weight="bold" text-anchor="middle">${(forecastVal * 100).toFixed(1)}%</text>`);
+    }
+
+    // X-axis time marks
+    elements.push(`<text x="${getX(0)}" y="${H - 10}" fill="var(--text-muted)" font-size="10" text-anchor="start">-30m</text>`);
+    elements.push(`<text x="${getX(15)}" y="${H - 10}" fill="var(--text-muted)" font-size="10" text-anchor="middle">-15m</text>`);
+    elements.push(`<text x="${getX(29)}" y="${H - 10}" fill="var(--text-secondary)" font-size="10" font-weight="bold" text-anchor="middle">Now (t)</text>`);
+    elements.push(`<text x="${getX(34)}" y="${H - 10}" fill="var(--orange)" font-size="10" font-weight="bold" text-anchor="middle">+5m</text>`);
+
+    svg.innerHTML = elements.join("\n");
+}
+
+// ================================================================
 // EVENT LISTENERS
 // ================================================================
 
@@ -428,6 +597,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     });
 
+    // Congestion forecast refresh button
+    const congBtn = el("congRefreshBtn");
+    if (congBtn) congBtn.addEventListener("click", () => fetchCongestionForecast());
+
     // Start-up sequence:
     // 1. Check backend health
     const backendOk = await checkHealth();
@@ -441,5 +614,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         await refreshDashboard();
     } catch {
         // No data yet — normal state before first load
+    }
+
+    // 3. Load Phase 2 Congestion Forecast (Simulated Data)
+    try {
+        await fetchCongestionForecast();
+    } catch {
+        // Handled internally in fetchCongestionForecast
     }
 });
