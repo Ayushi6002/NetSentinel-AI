@@ -1,0 +1,33 @@
+file_name,file_status,column_index,raw_name,normalized_name,pandas_mangled_name,dtype,is_raw_duplicate,is_norm_duplicate,missing_count,missing_pct,inf_count,inf_pct,invalid_numeric_count
+Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv,COMPLETED,14,Flow Bytes/s,Flow Bytes/s,Flow Bytes/s,float64,False,False,4,0.0018,30,0.0133,0
+Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv,COMPLETED,15, Flow Packets/s,Flow Packets/s, Flow Packets/s,float64,False,False,0,0.0,34,0.0151,0
+Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv,COMPLETED,34, Fwd Header Length,Fwd Header Length, Fwd Header Length,int64,True,True,0,0.0,0,0.0,0
+Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv,COMPLETED,55, Fwd Header Length,Fwd Header Length, Fwd Header Length.1,int64,True,True,0,0.0,0,0.0,0
+Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv,COMPLETED,14,Flow Bytes/s,Flow Bytes/s,Flow Bytes/s,float64,False,False,15,0.0052,356,0.1243,0
+Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv,COMPLETED,15, Flow Packets/s,Flow Packets/s, Flow Packets/s,float64,False,False,0,0.0,371,0.1295,0
+Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv,COMPLETED,34, Fwd Header Length,Fwd Header Length, Fwd Header Length,int64,True,True,0,0.0,0,0.0,0
+Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv,COMPLETED,55, Fwd Header Length,Fwd Header Length, Fwd Header Length.1,int64,True,True,0,0.0,0,0.0,0
+Friday-WorkingHours-Morning.pcap_ISCX.csv,COMPLETED,14,Flow Bytes/s,Flow Bytes/s,Flow Bytes/s,float64,False,False,28,0.0147,94,0.0492,0
+Friday-WorkingHours-Morning.pcap_ISCX.csv,COMPLETED,15, Flow Packets/s,Flow Packets/s, Flow Packets/s,float64,False,False,0,0.0,122,0.0639,0
+Friday-WorkingHours-Morning.pcap_ISCX.csv,COMPLETED,34, Fwd Header Length,Fwd Header Length, Fwd Header Length,int64,True,True,0,0.0,0,0.0,0
+Friday-WorkingHours-Morning.pcap_ISCX.csv,COMPLETED,55, Fwd Header Length,Fwd Header Length, Fwd Header Length.1,int64,True,True,0,0.0,0,0.0,0
+Monday-WorkingHours.pcap_ISCX.csv,COMPLETED,14,Flow Bytes/s,Flow Bytes/s,Flow Bytes/s,float64,False,False,64,0.0121,373,0.0704,0
+Monday-WorkingHours.pcap_ISCX.csv,COMPLETED,15, Flow Packets/s,Flow Packets/s, Flow Packets/s,float64,False,False,0,0.0,437,0.0825,0
+Monday-WorkingHours.pcap_ISCX.csv,COMPLETED,34, Fwd Header Length,Fwd Header Length, Fwd Header Length,int64,True,True,0,0.0,0,0.0,0
+Monday-WorkingHours.pcap_ISCX.csv,COMPLETED,55, Fwd Header Length,Fwd Header Length, Fwd Header Length.1,int64,True,True,0,0.0,0,0.0,0
+Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv,COMPLETED,14,Flow Bytes/s,Flow Bytes/s,Flow Bytes/s,float64,False,False,18,0.0062,189,0.0655,0
+Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv,COMPLETED,15, Flow Packets/s,Flow Packets/s, Flow Packets/s,float64,False,False,0,0.0,207,0.0717,0
+Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv,COMPLETED,34, Fwd Header Length,Fwd Header Length, Fwd Header Length,int64,True,True,0,0.0,0,0.0,0
+Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv,COMPLETED,55, Fwd Header Length,Fwd Header Length, Fwd Header Length.1,int64,True,True,0,0.0,0,0.0,0
+Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv,COMPLETED,14,Flow Bytes/s,Flow Bytes/s,Flow Bytes/s,float64,False,False,20,0.0117,115,0.0675,0
+Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv,COMPLETED,15, Flow Packets/s,Flow Packets/s, Flow Packets/s,float64,False,False,0,0.0,135,0.0792,0
+Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv,COMPLETED,34, Fwd Header Length,Fwd Header Length, Fwd Header Length,int64,True,True,0,0.0,0,0.0,0
+Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv,COMPLETED,55, Fwd Header Length,Fwd Header Length, Fwd Header Length.1,int64,True,True,0,0.0,0,0.0,0
+Tuesday-WorkingHours.pcap_ISCX.csv,COMPLETED,14,Flow Bytes/s,Flow Bytes/s,Flow Bytes/s,float64,False,False,201,0.0451,63,0.0141,0
+Tuesday-WorkingHours.pcap_ISCX.csv,COMPLETED,15, Flow Packets/s,Flow Packets/s, Flow Packets/s,float64,False,False,0,0.0,264,0.0592,0
+Tuesday-WorkingHours.pcap_ISCX.csv,COMPLETED,34, Fwd Header Length,Fwd Header Length, Fwd Header Length,int64,True,True,0,0.0,0,0.0,0
+Tuesday-WorkingHours.pcap_ISCX.csv,COMPLETED,55, Fwd Header Length,Fwd Header Length, Fwd Header Length.1,int64,True,True,0,0.0,0,0.0,0
+Wednesday-workingHours.pcap_ISCX.csv,COMPLETED,14,Flow Bytes/s,Flow Bytes/s,Flow Bytes/s,float64,False,False,1008,0.1455,289,0.0417,0
+Wednesday-workingHours.pcap_ISCX.csv,COMPLETED,15, Flow Packets/s,Flow Packets/s, Flow Packets/s,float64,False,False,0,0.0,1297,0.1872,0
+Wednesday-workingHours.pcap_ISCX.csv,COMPLETED,34, Fwd Header Length,Fwd Header Length, Fwd Header Length,int64,True,True,0,0.0,0,0.0,0
+Wednesday-workingHours.pcap_ISCX.csv,COMPLETED,55, Fwd Header Length,Fwd Header Length, Fwd Header Length.1,int64,True,True,0,0.0,0,0.0,0

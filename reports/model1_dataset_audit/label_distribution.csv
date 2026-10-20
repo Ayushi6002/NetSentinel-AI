@@ -1,0 +1,38 @@
+scope,file_status,label,count,percentage
+Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv,COMPLETED,DDoS,128027,56.7131
+Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv,COMPLETED,BENIGN,97718,43.2869
+Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv,COMPLETED,BENIGN,127537,44.5207
+Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv,COMPLETED,PortScan,158930,55.4793
+Friday-WorkingHours-Morning.pcap_ISCX.csv,COMPLETED,BENIGN,189067,98.9709
+Friday-WorkingHours-Morning.pcap_ISCX.csv,COMPLETED,Bot,1966,1.0291
+Monday-WorkingHours.pcap_ISCX.csv,COMPLETED,BENIGN,529918,100.0
+Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv,COMPLETED,BENIGN,288566,99.9875
+Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv,COMPLETED,Infiltration,36,0.0125
+Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv,COMPLETED,BENIGN,168186,98.7204
+Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv,COMPLETED,Web Attack � Brute Force,1507,0.8846
+Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv,COMPLETED,Web Attack � XSS,652,0.3827
+Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv,COMPLETED,Web Attack � Sql Injection,21,0.0123
+Tuesday-WorkingHours.pcap_ISCX.csv,COMPLETED,BENIGN,432074,96.8973
+Tuesday-WorkingHours.pcap_ISCX.csv,COMPLETED,FTP-Patator,7938,1.7802
+Tuesday-WorkingHours.pcap_ISCX.csv,COMPLETED,SSH-Patator,5897,1.3225
+Wednesday-workingHours.pcap_ISCX.csv,COMPLETED,BENIGN,440031,63.5238
+Wednesday-workingHours.pcap_ISCX.csv,COMPLETED,DoS Hulk,231073,33.3582
+Wednesday-workingHours.pcap_ISCX.csv,COMPLETED,DoS slowloris,5796,0.8367
+Wednesday-workingHours.pcap_ISCX.csv,COMPLETED,DoS Slowhttptest,5499,0.7938
+Wednesday-workingHours.pcap_ISCX.csv,COMPLETED,DoS GoldenEye,10293,1.4859
+Wednesday-workingHours.pcap_ISCX.csv,COMPLETED,Heartbleed,11,0.0016
+ALL_FILES_GLOBAL,COMPLETED,BENIGN,2273097,80.3004
+ALL_FILES_GLOBAL,COMPLETED,DoS Hulk,231073,8.163
+ALL_FILES_GLOBAL,COMPLETED,PortScan,158930,5.6144
+ALL_FILES_GLOBAL,COMPLETED,DDoS,128027,4.5227
+ALL_FILES_GLOBAL,COMPLETED,DoS GoldenEye,10293,0.3636
+ALL_FILES_GLOBAL,COMPLETED,FTP-Patator,7938,0.2804
+ALL_FILES_GLOBAL,COMPLETED,SSH-Patator,5897,0.2083
+ALL_FILES_GLOBAL,COMPLETED,DoS slowloris,5796,0.2048
+ALL_FILES_GLOBAL,COMPLETED,DoS Slowhttptest,5499,0.1943
+ALL_FILES_GLOBAL,COMPLETED,Bot,1966,0.0695
+ALL_FILES_GLOBAL,COMPLETED,Web Attack � Brute Force,1507,0.0532
+ALL_FILES_GLOBAL,COMPLETED,Web Attack � XSS,652,0.023
+ALL_FILES_GLOBAL,COMPLETED,Infiltration,36,0.0013
+ALL_FILES_GLOBAL,COMPLETED,Web Attack � Sql Injection,21,0.0007
+ALL_FILES_GLOBAL,COMPLETED,Heartbleed,11,0.0004
