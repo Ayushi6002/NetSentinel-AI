@@ -50,3 +50,8 @@ Thumbs.db
 
 # Large raw datasets (do not commit)
 data/raw/
+
+# Serialized machine learning models and generated model directories
+*.joblib
+models/*
+!models/.gitkeep
