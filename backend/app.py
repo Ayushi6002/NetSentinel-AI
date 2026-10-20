@@ -61,6 +61,12 @@ from backend.routes.traffic_routes import traffic_bp
 app.register_blueprint(traffic_bp, url_prefix="/api/traffic")
 
 # ----------------------------------------------------------------
+# Register Phase 2 Blueprint
+# ----------------------------------------------------------------
+from backend.routes.congestion_routes import congestion_bp
+app.register_blueprint(congestion_bp, url_prefix="/api/congestion")
+
+# ----------------------------------------------------------------
 # Core endpoints
 # ----------------------------------------------------------------
 

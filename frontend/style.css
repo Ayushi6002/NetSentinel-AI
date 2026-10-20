@@ -517,6 +517,233 @@ body {
     padding: 24px 0;
 }
 
+/* ---- CONGESTION FORECAST (PHASE 2 - SIMULATED DATA) ---- */
+.congestion-card {
+    border: 1px solid rgba(47, 129, 247, 0.3);
+}
+
+.badge-simulated {
+    background: rgba(219, 109, 40, 0.18);
+    color: var(--orange);
+    border: 1px solid rgba(219, 109, 40, 0.45);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+.congestion-header-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.congestion-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+.congestion-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-sm {
+    padding: 5px 12px;
+    font-size: 0.78rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-sm:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.alert-status-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+}
+
+.alert-status-badge.normal {
+    background: var(--green-dim);
+    color: var(--green);
+    border-color: rgba(63, 185, 80, 0.4);
+}
+
+.alert-status-badge.alert {
+    background: rgba(248, 81, 73, 0.2);
+    color: var(--red);
+    border-color: rgba(248, 81, 73, 0.6);
+    box-shadow: 0 0 10px rgba(248, 81, 73, 0.3);
+}
+
+.alert-status-badge.unavailable {
+    background: var(--yellow-dim);
+    color: var(--yellow);
+    border-color: rgba(210, 153, 34, 0.4);
+}
+
+.unavailable-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(210, 153, 34, 0.1);
+    border: 1px solid rgba(210, 153, 34, 0.3);
+    border-radius: var(--radius-sm);
+    color: var(--yellow);
+    font-size: 0.85rem;
+}
+
+.unavailable-icon {
+    font-size: 1.4rem;
+}
+
+.text-error {
+    color: var(--red);
+}
+
+.cong-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.cong-metric-box {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.cong-metric-box.highlight-forecast {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+}
+
+.cong-metric-label {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.cong-metric-value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.cong-metric-sub {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.threshold-color {
+    color: var(--red);
+}
+
+.cong-chart-box {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cong-chart-legend {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.observed-dot {
+    background: var(--accent);
+}
+
+.forecast-dot {
+    background: var(--orange);
+}
+
+.legend-dash {
+    width: 14px;
+    height: 2px;
+    display: inline-block;
+}
+
+.threshold-dash {
+    border-top: 2px dashed var(--red);
+}
+
+.cong-svg-wrapper {
+    width: 100%;
+    height: 180px;
+    position: relative;
+}
+
+.cong-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.cong-meta-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-light);
+    padding-top: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
 /* ---- FOOTER ---- */
 .footer {
     text-align: center;
@@ -526,3 +753,4 @@ body {
     border-top: 1px solid var(--border-light);
     margin-top: 8px;
 }
+
