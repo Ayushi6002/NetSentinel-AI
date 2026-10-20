@@ -1,0 +1,9 @@
+file_name,status,is_complete,file_size_mb,file_size_bytes,row_count,column_count,unique_rows,intra_file_duplicates,intra_file_duplicate_pct,cross_file_duplicates,within_chunk_duplicates,total_missing_values,total_inf_values,total_invalid_numeric,anomalous_rows_count,anomalous_rows_pct,replacement_chars_detected,raw_duplicate_columns_count,pandas_mangled_columns_count,encoding,errors_count,warnings_count
+Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv,COMPLETED,True,73.55,77123859,225745,79,223112,2633,1.17,0,1870,4,64,0,34,0.0151,0,1,1,utf-8,0,0
+Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv,COMPLETED,True,73.34,76906168,286467,79,214114,72353,25.26,1525,47775,15,727,0,371,0.1295,0,1,1,utf-8,0,0
+Friday-WorkingHours-Morning.pcap_ISCX.csv,COMPLETED,True,55.62,58316725,191033,79,184145,6888,3.61,3952,5404,28,216,0,122,0.0639,0,1,1,utf-8,0,0
+Monday-WorkingHours.pcap_ISCX.csv,COMPLETED,True,168.73,176927918,529918,79,502983,26935,5.08,196,17480,64,810,0,437,0.0825,0,1,1,utf-8,0,0
+Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv,COMPLETED,True,79.25,83102436,288602,79,252972,35630,12.35,6942,28104,18,396,0,207,0.0717,0,1,1,utf-8,0,0
+Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv,COMPLETED,True,49.61,52023263,170366,79,164300,6066,3.56,7611,4829,20,250,0,135,0.0792,2180,1,1,utf-8,0,1
+Tuesday-WorkingHours.pcap_ISCX.csv,COMPLETED,True,128.82,135078995,445909,79,421844,24065,5.4,11647,16647,201,327,0,264,0.0592,0,1,1,utf-8,0,0
+Wednesday-workingHours.pcap_ISCX.csv,COMPLETED,True,214.74,225166395,692703,79,610794,81909,11.82,20029,71964,1008,1586,0,1297,0.1872,0,1,1,utf-8,0,0

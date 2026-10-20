@@ -1,0 +1,80 @@
+column_index,reference_raw_name,reference_normalized_name,pandas_mangled_name,is_raw_duplicate,is_norm_duplicate,all_files_consistent
+0, Destination Port,Destination Port, Destination Port,False,False,True
+1, Flow Duration,Flow Duration, Flow Duration,False,False,True
+2, Total Fwd Packets,Total Fwd Packets, Total Fwd Packets,False,False,True
+3, Total Backward Packets,Total Backward Packets, Total Backward Packets,False,False,True
+4,Total Length of Fwd Packets,Total Length of Fwd Packets,Total Length of Fwd Packets,False,False,True
+5, Total Length of Bwd Packets,Total Length of Bwd Packets, Total Length of Bwd Packets,False,False,True
+6, Fwd Packet Length Max,Fwd Packet Length Max, Fwd Packet Length Max,False,False,True
+7, Fwd Packet Length Min,Fwd Packet Length Min, Fwd Packet Length Min,False,False,True
+8, Fwd Packet Length Mean,Fwd Packet Length Mean, Fwd Packet Length Mean,False,False,True
+9, Fwd Packet Length Std,Fwd Packet Length Std, Fwd Packet Length Std,False,False,True
+10,Bwd Packet Length Max,Bwd Packet Length Max,Bwd Packet Length Max,False,False,True
+11, Bwd Packet Length Min,Bwd Packet Length Min, Bwd Packet Length Min,False,False,True
+12, Bwd Packet Length Mean,Bwd Packet Length Mean, Bwd Packet Length Mean,False,False,True
+13, Bwd Packet Length Std,Bwd Packet Length Std, Bwd Packet Length Std,False,False,True
+14,Flow Bytes/s,Flow Bytes/s,Flow Bytes/s,False,False,True
+15, Flow Packets/s,Flow Packets/s, Flow Packets/s,False,False,True
+16, Flow IAT Mean,Flow IAT Mean, Flow IAT Mean,False,False,True
+17, Flow IAT Std,Flow IAT Std, Flow IAT Std,False,False,True
+18, Flow IAT Max,Flow IAT Max, Flow IAT Max,False,False,True
+19, Flow IAT Min,Flow IAT Min, Flow IAT Min,False,False,True
+20,Fwd IAT Total,Fwd IAT Total,Fwd IAT Total,False,False,True
+21, Fwd IAT Mean,Fwd IAT Mean, Fwd IAT Mean,False,False,True
+22, Fwd IAT Std,Fwd IAT Std, Fwd IAT Std,False,False,True
+23, Fwd IAT Max,Fwd IAT Max, Fwd IAT Max,False,False,True
+24, Fwd IAT Min,Fwd IAT Min, Fwd IAT Min,False,False,True
+25,Bwd IAT Total,Bwd IAT Total,Bwd IAT Total,False,False,True
+26, Bwd IAT Mean,Bwd IAT Mean, Bwd IAT Mean,False,False,True
+27, Bwd IAT Std,Bwd IAT Std, Bwd IAT Std,False,False,True
+28, Bwd IAT Max,Bwd IAT Max, Bwd IAT Max,False,False,True
+29, Bwd IAT Min,Bwd IAT Min, Bwd IAT Min,False,False,True
+30,Fwd PSH Flags,Fwd PSH Flags,Fwd PSH Flags,False,False,True
+31, Bwd PSH Flags,Bwd PSH Flags, Bwd PSH Flags,False,False,True
+32, Fwd URG Flags,Fwd URG Flags, Fwd URG Flags,False,False,True
+33, Bwd URG Flags,Bwd URG Flags, Bwd URG Flags,False,False,True
+34, Fwd Header Length,Fwd Header Length, Fwd Header Length,True,True,True
+35, Bwd Header Length,Bwd Header Length, Bwd Header Length,False,False,True
+36,Fwd Packets/s,Fwd Packets/s,Fwd Packets/s,False,False,True
+37, Bwd Packets/s,Bwd Packets/s, Bwd Packets/s,False,False,True
+38, Min Packet Length,Min Packet Length, Min Packet Length,False,False,True
+39, Max Packet Length,Max Packet Length, Max Packet Length,False,False,True
+40, Packet Length Mean,Packet Length Mean, Packet Length Mean,False,False,True
+41, Packet Length Std,Packet Length Std, Packet Length Std,False,False,True
+42, Packet Length Variance,Packet Length Variance, Packet Length Variance,False,False,True
+43,FIN Flag Count,FIN Flag Count,FIN Flag Count,False,False,True
+44, SYN Flag Count,SYN Flag Count, SYN Flag Count,False,False,True
+45, RST Flag Count,RST Flag Count, RST Flag Count,False,False,True
+46, PSH Flag Count,PSH Flag Count, PSH Flag Count,False,False,True
+47, ACK Flag Count,ACK Flag Count, ACK Flag Count,False,False,True
+48, URG Flag Count,URG Flag Count, URG Flag Count,False,False,True
+49, CWE Flag Count,CWE Flag Count, CWE Flag Count,False,False,True
+50, ECE Flag Count,ECE Flag Count, ECE Flag Count,False,False,True
+51, Down/Up Ratio,Down/Up Ratio, Down/Up Ratio,False,False,True
+52, Average Packet Size,Average Packet Size, Average Packet Size,False,False,True
+53, Avg Fwd Segment Size,Avg Fwd Segment Size, Avg Fwd Segment Size,False,False,True
+54, Avg Bwd Segment Size,Avg Bwd Segment Size, Avg Bwd Segment Size,False,False,True
+55, Fwd Header Length,Fwd Header Length, Fwd Header Length.1,True,True,True
+56,Fwd Avg Bytes/Bulk,Fwd Avg Bytes/Bulk,Fwd Avg Bytes/Bulk,False,False,True
+57, Fwd Avg Packets/Bulk,Fwd Avg Packets/Bulk, Fwd Avg Packets/Bulk,False,False,True
+58, Fwd Avg Bulk Rate,Fwd Avg Bulk Rate, Fwd Avg Bulk Rate,False,False,True
+59, Bwd Avg Bytes/Bulk,Bwd Avg Bytes/Bulk, Bwd Avg Bytes/Bulk,False,False,True
+60, Bwd Avg Packets/Bulk,Bwd Avg Packets/Bulk, Bwd Avg Packets/Bulk,False,False,True
+61,Bwd Avg Bulk Rate,Bwd Avg Bulk Rate,Bwd Avg Bulk Rate,False,False,True
+62,Subflow Fwd Packets,Subflow Fwd Packets,Subflow Fwd Packets,False,False,True
+63, Subflow Fwd Bytes,Subflow Fwd Bytes, Subflow Fwd Bytes,False,False,True
+64, Subflow Bwd Packets,Subflow Bwd Packets, Subflow Bwd Packets,False,False,True
+65, Subflow Bwd Bytes,Subflow Bwd Bytes, Subflow Bwd Bytes,False,False,True
+66,Init_Win_bytes_forward,Init_Win_bytes_forward,Init_Win_bytes_forward,False,False,True
+67, Init_Win_bytes_backward,Init_Win_bytes_backward, Init_Win_bytes_backward,False,False,True
+68, act_data_pkt_fwd,act_data_pkt_fwd, act_data_pkt_fwd,False,False,True
+69, min_seg_size_forward,min_seg_size_forward, min_seg_size_forward,False,False,True
+70,Active Mean,Active Mean,Active Mean,False,False,True
+71, Active Std,Active Std, Active Std,False,False,True
+72, Active Max,Active Max, Active Max,False,False,True
+73, Active Min,Active Min, Active Min,False,False,True
+74,Idle Mean,Idle Mean,Idle Mean,False,False,True
+75, Idle Std,Idle Std, Idle Std,False,False,True
+76, Idle Max,Idle Max, Idle Max,False,False,True
+77, Idle Min,Idle Min, Idle Min,False,False,True
+78, Label,Label, Label,False,False,True
